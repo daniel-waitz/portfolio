@@ -1,0 +1,28 @@
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 175.8 50" style="enable-background:new 0 0 175.8 50;" xml:space="preserve"><defs><filter id="pf-muted" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="0.0893 0.3004 0.0303 0 0.3020 0.0893 0.3004 0.0303 0 0.4000 0.0893 0.3004 0.0303 0 0.4392 0 0 0 1 0"/></filter></defs><g filter="url(#pf-muted)">
+ <style type="text/css">
+  .st0{fill-rule:evenodd;clip-rule:evenodd;fill:#DA291C;}
+ </style>
+ <desc>
+  Created with Sketch.
+ </desc>
+ <g id="Symbols">
+  <g id="Footer" transform="translate(-120.000000, -516.000000)">
+   <g id="Group-65">
+    <g id="Group-59" transform="translate(0.000000, 492.000000)">
+     <g id="avaya-logo-red" transform="translate(120.000000, 24.000000)">
+      <polygon id="Fill-1" class="st0" points="153.1,0 135.4,36.4 142.6,36.4 145.1,30.8 161.3,30.8 159.4,26 147.4,26 155.6,8.3 &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;168.7,36.4 175.8,36.4 158.1,0">
+      </polygon>
+      <polygon id="Fill-2" class="st0" points="17.7,0 0,36.4 7.2,36.4 9.7,30.8 25.9,30.8 24,26 12,26 20.2,8.3 33.3,36.4 &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;40.4,36.4 22.7,0">
+      </polygon>
+      <polygon id="Fill-3" class="st0" points="85.2,0 67.4,36.4 74.6,36.4 77.2,30.8 93.4,30.8 91.4,26 79.4,26 87.7,8.3 &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;100.7,36.4 107.9,36.4 90.1,0">
+      </polygon>
+      <polygon id="Fill-4" class="st0" points="67,0 54,28.6 40.9,0 33.7,0 51.5,36.4 51.8,36.4 56.1,36.4 56.4,36.4 74.2,0">
+      </polygon>
+      <polygon id="Fill-5" class="st0" points="135.1,0 121.5,29.1 109,0 101.8,0 118,36.4 110.9,50 117.8,50 142.3,0">
+      </polygon>
+     </g>
+    </g>
+   </g>
+  </g>
+ </g>
+</g></svg>
