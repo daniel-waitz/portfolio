@@ -225,7 +225,8 @@ html[data-theme="dark"] .social img{filter:none;opacity:1}
 /* the travelling photo passes behind the About text and stays hoverable once it lands */
 .about .wrap{position:relative;z-index:45;pointer-events:none}
 .about .wrap h2,.about-right,.about-where{pointer-events:auto}
-@media (max-width:900px){.about-grid{grid-template-columns:1fr}.about-left{max-width:420px}}
+@media (max-width:900px){.about-grid{grid-template-columns:minmax(0,1fr)}.about-left{max-width:420px}}
+.about-right{min-width:0}
 /* fanned deck of highlight cards */
 @property --pop{syntax:'<angle>';inherits:false;initial-value:0deg}
 .deck-wrap{display:flex;justify-content:flex-end;margin-top:clamp(28px,3.5vw,44px)}
@@ -470,7 +471,7 @@ html.is-locked,html.is-locked body{overflow:hidden}
 /* ---------- make cards: plain pointer, no pill ---------- */
 #mk-holder .cf-card,#mk-holder .cf-card *{cursor:pointer!important}
 /* ---------- projects: theme and frame overrides ---------- */
-.pj-tabs-wrap{position:relative;margin-top:28px}
+.pj-tabs-wrap{margin-top:28px}
 .pj-tabs{margin-top:0}
 .cf-holder{border:1px solid var(--border);box-shadow:var(--shadow)}
 .cf-frame{display:block;padding:5px;border-radius:14px;background:var(--frame)}
@@ -685,3 +686,28 @@ html[data-theme="light"] .tw-wrap.is-drag{cursor:url("data:image/svg+xml,%3Csvg%
 .tl-name{font-size:16px;font-weight:500;color:var(--txt)}
 .belt-logo{position:absolute;left:0;top:0;will-change:transform}
 .tools-static{display:flex;flex-wrap:wrap;align-items:center;row-gap:16px;width:min(1400px,100% - 2*var(--pad));margin-inline:auto}
+
+/* About highlights as a moving row: phones only (the fanned deck is for larger screens) */
+.hl-wrap{display:none}
+.hl-card{flex:0 0 auto;width:250px;display:flex;flex-direction:column;gap:10px;padding:20px 22px}
+.hl-card .deck-n{font-size:28px}
+.hl-card .deck-t{color:var(--txt-2)}
+.mq-wrap{overflow:hidden;contain:paint;touch-action:pan-y;user-select:none;-webkit-user-select:none;padding-block:4px 10px;margin-inline:calc(-1 * var(--pad))}
+.mq-wrap .tw-set{gap:14px;padding-right:14px}
+.js.reduce .mq-wrap{overflow-x:auto;padding-inline:var(--pad)}
+html.js.no-fly .about-pic-static{visibility:visible}
+
+/* phones: an arrow shows there are more pills to the right */
+.more-wrap{position:relative}
+.more-btn{display:none}
+@media (max-width:767px){
+  .deck-wrap{display:none}
+  .hl-wrap{display:block;margin-top:24px}
+  .about .wrap{pointer-events:auto}
+  .more-btn{position:absolute;right:calc(-1 * var(--pad) + 6px);top:50%;z-index:2;display:grid;place-items:center;width:44px;height:44px;margin-top:-22px;padding:0;border:0;background:none;color:var(--txt);opacity:0;pointer-events:none;transition:opacity .2s var(--ease)}
+  .more-btn::before{content:"";position:absolute;inset:7px;border-radius:50%;background:var(--bg);border:1px solid var(--border-2);box-shadow:0 2px 8px rgba(0,0,0,.12)}
+  .more-btn svg{position:relative}
+  .more-wrap.has-more .more-btn{opacity:1;pointer-events:auto}
+  .tool-ic{max-width:100%}
+  .tool-ic img{max-width:100%;height:auto!important}
+}

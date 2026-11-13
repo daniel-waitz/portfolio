@@ -408,11 +408,11 @@
     $('#lb-next').addEventListener('click', function () { showLb(lbIdx + 1); });
     lb.addEventListener('keydown', function (e) { if (e.key === 'ArrowRight') showLb(lbIdx + 1); else if (e.key === 'ArrowLeft') showLb(lbIdx - 1); });
   })();
-  /* ---------------------------------------------------------- testimonials marquee */
-  (function () {
-    var wrap = $('.tw-wrap'), track = $('#tw-track'), set = $('#tw-set');
-    if (!wrap || !track || !set) return;
-    if (reduce) return;
+  /* ---------------------------------------------------------- moving rows (testimonials; About highlights on phones):
+     they move on their own, stop on hover or press, and can be dragged */
+  function marquee(wrap) {
+    var track = wrap && $('.tw-track', wrap), set = track && $('.tw-set', track);
+    if (!wrap || !track || !set || reduce) return;
     var SPEED = 42, setW = 0, x = 0, extra = 0, hovering = false, holding = false, visible = true, last = 0;
     function build() {
       $$('.tw-clone', track).forEach(function (n) { n.remove(); });
@@ -435,14 +435,18 @@
       hover: function (v) { hovering = v; },
       hold: function (v) { holding = v; },
       dragStart: function () { wrap.classList.add('is-drag'); },
-      drag: function (dx) { x = mod(x - dx, setW); apply(); },
+      drag: function (dx) { if (setW) { x = mod(x - dx, setW); apply(); } },
       dragEnd: function (v) { wrap.classList.remove('is-drag'); extra = -v; }
     });
-    build();
-    if ('ResizeObserver' in window) new ResizeObserver(function () { build(); }).observe(wrap);
+    var lastW = -1;
+    function rebuild() { var w = wrap.clientWidth; if (w !== lastW) { lastW = w; build(); } }
+    rebuild();
+    if ('ResizeObserver' in window) new ResizeObserver(rebuild).observe(wrap);
     if ('IntersectionObserver' in window) new IntersectionObserver(function (en) { visible = en[0].isIntersecting; }, { rootMargin: '120px' }).observe(wrap);
     requestAnimationFrame(function (t) { last = t; tick(t); });
-  })();
+  }
+  marquee($('.testi .tw-wrap'));
+  marquee($('.hl-wrap'));
 
 
   /* ---------------------------------------------------------- hero intro
@@ -524,7 +528,10 @@
       onScroll(true);
     }
     function clamp(v) { return Math.min(1, Math.max(0, v)); }
+    var mqPhone = window.matchMedia('(max-width: 767px)');
     function onScroll(force) {
+      root.classList.toggle('no-fly', mqPhone.matches);
+      if (mqPhone.matches) { p = 0; lastY = window.pageYOffset; if (!raf) raf = requestAnimationFrame(render); return; }
       var y = window.pageYOffset, down = y >= lastY;
       var pd = clamp((y - S1) / (E - S1)), pu = clamp((y - S1) / (S2 - S1));
       if (force === true) p = pd;                          // first paint: place it for where the reader is
@@ -549,6 +556,7 @@
       }
     }
     window.addEventListener('scroll', onScroll, { passive: true });
+    if (mqPhone.addEventListener) mqPhone.addEventListener('change', measure);
     window.addEventListener('resize', measure); window.addEventListener('load', measure);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
     if ('ResizeObserver' in window) new ResizeObserver(measure).observe(document.body);
@@ -822,6 +830,27 @@
         .catch(function () { busy(false); say(false); });
     });
   })();
+  /* ---------------------------------------------------------- phones: an arrow on pill rows that scroll sideways */
+  (function () {
+    var AR = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>';
+    $$('.pj-tabs, .cf-filters').forEach(function (row) {
+      var wrap = row.parentNode;
+      if (!wrap.classList.contains('more-wrap')) {
+        wrap = document.createElement('div'); wrap.className = 'more-wrap';
+        row.parentNode.insertBefore(wrap, row); wrap.appendChild(row);
+        if (row.hasAttribute('data-reveal')) { row.removeAttribute('data-reveal'); row.classList.add('in'); }
+      }
+      var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'more-btn'; btn.setAttribute('aria-label', 'Show more options'); btn.innerHTML = AR;
+      wrap.appendChild(btn);
+      function upd() { var more = row.scrollWidth - row.clientWidth - row.scrollLeft > 6; wrap.classList.toggle('has-more', more); }
+      btn.addEventListener('click', function () { row.scrollBy({ left: row.clientWidth * 0.7, behavior: reduce ? 'auto' : 'smooth' }); });
+      row.addEventListener('scroll', upd, { passive: true });
+      window.addEventListener('resize', upd);
+      if ('ResizeObserver' in window) new ResizeObserver(upd).observe(row);
+      upd();
+    });
+  })();
+
   /* ---------------------------------------------------------- FAQ: one answer open at a time (for browsers without details[name]) */
   (function () {
     var items = $$('.faq-item');
