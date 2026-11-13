@@ -592,7 +592,7 @@ html.is-locked,html.is-locked body{overflow:hidden}
 .faq-ic .faq-v{transition:opacity .2s var(--ease)}
 .faq-item[open] .faq-ic{transform:rotate(180deg)}
 .faq-item[open] .faq-ic .faq-v{opacity:0}
-.faq-a{margin:-4px 32px 18px 36px;font-size:16.5px;line-height:1.5;color:var(--txt-2)}
+.faq-a{margin:-4px 32px 18px 0;font-size:16.5px;line-height:1.5;color:var(--txt-2)}
 .faq-item[open] .faq-a{animation:faq-in .25s var(--ease)}
 @keyframes faq-in{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
 @media (max-width:899px){
