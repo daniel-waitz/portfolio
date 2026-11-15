@@ -821,7 +821,7 @@
       status.hidden = true;
       var bad = fields.filter(function (f) { return !check(f, true); });
       if (bad.length) { bad[0].el.focus(); return; }
-      if ($('#f-botcheck').value) return;                      // honeypot: a bot filled the hidden field
+      if ($('#f-botcheck').value) { say(false); return; }      // honeypot tripped: show the error and the "Email me" fallback, send nothing
       var action = form.getAttribute('action') || '';
       if (!action || action.indexOf('FORM_ENDPOINT_PLACEHOLDER') > -1) { say(false); return; }   // never pretend a send worked
       if (!window.fetch || !window.FormData) { form.submit(); return; }   // old browsers: a normal form post
