@@ -711,3 +711,9 @@ html.js.no-fly .about-pic-static{visibility:visible}
   .tool-ic{max-width:100%}
   .tool-ic img{max-width:100%;height:auto!important}
 }
+
+.fg-credit{margin-top:16px;font-size:13px;color:var(--muted)}
+.fg-credit a{color:inherit;text-underline-offset:3px}
+.fg-credit a:hover{color:var(--band-text)}
+
+.form-status>span{flex:1 1 220px;min-width:0}

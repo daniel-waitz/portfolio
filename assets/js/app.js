@@ -821,11 +821,13 @@
       status.hidden = true;
       var bad = fields.filter(function (f) { return !check(f, true); });
       if (bad.length) { bad[0].el.focus(); return; }
-      if ($('#f-website').value) return;                       // honeypot: a bot filled the hidden field
+      if ($('#f-botcheck').value) return;                      // honeypot: a bot filled the hidden field
       var action = form.getAttribute('action') || '';
-      if (!action || action.indexOf('FORM_ENDPOINT_PLACEHOLDER') > -1 || !window.fetch) { say(false); return; }   // never pretend a send worked
+      if (!action || action.indexOf('FORM_ENDPOINT_PLACEHOLDER') > -1) { say(false); return; }   // never pretend a send worked
+      if (!window.fetch || !window.FormData) { form.submit(); return; }   // old browsers: a normal form post
       busy(true);
       fetch(action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } })
+        .then(function (r) { return r.text().then(function (t) { var j = null; try { j = JSON.parse(t); } catch (x) {} return { ok: r.ok && !(j && (j.success === false || j.ok === false)) }; }); })
         .then(function (r) { busy(false); if (r.ok) { form.reset(); fields.forEach(function (f) { f.el.removeAttribute('aria-invalid'); f.err.hidden = true; }); say(true); } else say(false); })
         .catch(function () { busy(false); say(false); });
     });
