@@ -524,6 +524,9 @@
       var L = rect(links), D = rect(deck), barH = bar ? bar.offsetHeight : 0;
       S1 = L.y + L.h - barH;                               // icons have gone under the header
       E = Math.max(S1 + 1, B.y + B.w / 2 - window.innerHeight / 2);   // About photo mid-screen
+      // ...or sooner: it has always landed by the time the About heading sits under the header (nav jump)
+      var ab = $('#about');
+      if (ab) { var anchor = rect(ab).y - (parseFloat(getComputedStyle(ab).scrollMarginTop) || 0); E = Math.max(S1 + 1, Math.min(E, anchor - 2)); }
       S2 = Math.max(S1 + 1, D.y - window.innerHeight);     // About cards have dropped below the screen
       onScroll(true);
     }
