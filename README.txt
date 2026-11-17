@@ -21,6 +21,7 @@ FILES
   robots.txt            tells search engines they may index the site, and where the sitemap is
   sitemap.xml           the list of pages for search engines
   og-preview.jpg        the 1200x630 picture shown when the link is shared
+  favicon.ico           48x48 icon (also 32 and 16) for browsers and Google search results
   assets/css/style.css  all styling (light and dark theme colours are at the top)
   assets/js/app.js      all behaviour (theme switch, menu, background lines, projects, contact form)
   assets/img            headshot, project screenshots, testimonial photos
