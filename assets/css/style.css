@@ -746,3 +746,23 @@ html.js.no-fly .about-pic-static{visibility:visible}
 .site-foot a:focus-visible{outline:3px solid #D6B25E;outline-offset:2px;border-radius:4px}
 .contact{padding-bottom:clamp(28px,3vw,40px)}
 @media (max-width:767px){.foot-in{flex-direction:column;align-items:flex-start}.foot-in p::after{content:none}}
+
+/* ---------- email pop-over on the Gmail buttons: shows the address with a Copy button ---------- */
+.has-pop{position:relative}
+.mail-pop{position:absolute;left:50%;bottom:calc(100% + 12px);z-index:60;display:flex;align-items:center;gap:10px;padding:6px 6px 6px 14px;border-radius:999px;background:var(--deep);color:#FAF6EE;font-size:14.5px;font-weight:500;white-space:nowrap;box-shadow:0 10px 26px rgba(15,26,23,.22);
+  opacity:0;visibility:hidden;transform:translate(-50%,6px);transition:opacity .2s var(--ease),transform .2s var(--ease),visibility 0s .2s}
+.mail-pop::before{content:"";position:absolute;left:0;right:0;top:100%;height:14px}   /* keeps the hover alive on the way up */
+.mail-pop::after{content:"";position:absolute;left:50%;top:100%;width:10px;height:10px;margin:-5px 0 0 -5px;background:inherit;transform:rotate(45deg);border-radius:2px}
+.has-pop:hover .mail-pop,.has-pop:focus-within .mail-pop,.has-pop.pop-on .mail-pop{opacity:1;visibility:visible;transform:translate(-50%,0);transition:opacity .2s var(--ease),transform .2s var(--ease),visibility 0s}
+.mail-copy{position:relative;z-index:1;display:inline-flex;align-items:center;gap:6px;min-height:32px;padding:0 12px;border:0;border-radius:999px;background:#FAF6EE;color:#1F4D3F;font-size:13.5px;font-weight:600;transition:background-color .2s var(--ease),transform .15s var(--ease)}
+.mail-copy::before{content:"";position:absolute;inset:-6px -4px}   /* 44px tap area */
+.mail-copy:hover{background:#FFFFFF}
+.mail-copy:active{transform:scale(.96)}
+.mail-copy.is-done{background:#D6B25E;color:#14231F}
+.mail-copy:focus-visible{outline:3px solid #D6B25E;outline-offset:2px}
+/* on the dark contact band the pop-over turns cream */
+.contact .mail-pop{background:#F2EEE4;color:#14231F}
+.contact .mail-copy{background:#1F4D3F;color:#FAF6EE}
+.contact .mail-copy:hover{background:#163A2F}
+.contact .mail-copy.is-done{background:#D6B25E;color:#14231F}
+@media (prefers-reduced-motion:reduce){.mail-pop{transform:translate(-50%,0)}}

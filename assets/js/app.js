@@ -856,6 +856,31 @@
     });
   })();
 
+  /* ---------------------------------------------------------- copy the email address */
+  (function () {
+    var live = document.createElement('p'); live.className = 'sr-only'; live.setAttribute('aria-live', 'polite'); document.body.appendChild(live);
+    function fallback(text) {
+      var t = document.createElement('textarea'); t.value = text; t.setAttribute('readonly', ''); t.style.position = 'fixed'; t.style.opacity = '0';
+      document.body.appendChild(t); t.select(); var ok = false; try { ok = document.execCommand('copy'); } catch (e) {} t.remove(); return ok;
+    }
+    $$('.mail-copy').forEach(function (btn) {
+      var label = $('.mail-copy-t', btn), timer = 0, li = btn.closest('.has-pop');
+      function done(ok) {
+        clearTimeout(timer);
+        btn.classList.toggle('is-done', ok); label.textContent = ok ? 'Copied!' : 'Press Ctrl+C';
+        live.textContent = ok ? 'Email address copied' : '';
+        if (li) li.classList.add('pop-on');
+        timer = setTimeout(function () { btn.classList.remove('is-done'); label.textContent = 'Copy'; if (li) li.classList.remove('pop-on'); }, 1600);
+      }
+      btn.addEventListener('click', function (e) {
+        e.preventDefault(); e.stopPropagation();
+        var text = btn.getAttribute('data-copy');
+        if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(fallback(text)); });
+        else done(fallback(text));
+      });
+    });
+  })();
+
   /* ---------------------------------------------------------- FAQ: one answer open at a time (for browsers without details[name]) */
   (function () {
     var items = $$('.faq-item');
